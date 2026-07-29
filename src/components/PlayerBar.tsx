@@ -10,7 +10,6 @@ interface PlayerBarProps {
   onPrev: () => void;
   currentTime: string;
   remainingTime: string;
-  hasSubscription: boolean;
   onSubscribe: () => void;
 }
 
@@ -22,7 +21,6 @@ export default function PlayerBar({
   onPrev,
   currentTime,
   remainingTime,
-  hasSubscription,
   onSubscribe,
 }: PlayerBarProps) {
   if (!player.currentTrack) return null;
@@ -34,7 +32,6 @@ export default function PlayerBar({
     <div className={`absolute bottom-0 left-0 right-0 z-30 border-t backdrop-blur-md ${
       isAd ? 'bg-amber-950/90 border-amber-700/30' : 'bg-black/90 border-white/[0.06]'
     }`}>
-      {/* Ad banner */}
       {isAd && (
         <div className="flex items-center justify-center gap-2 py-1.5 bg-amber-700/20">
           <Zap size={14} className="text-amber-400" />
@@ -49,7 +46,6 @@ export default function PlayerBar({
       )}
 
       <div className="mx-auto flex h-16 max-w-screen-2xl items-center gap-4 px-4 sm:px-6">
-        {/* LEFT — Track info */}
         <div className="flex w-[200px] min-w-[200px] items-center gap-3">
           <div className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-lg ${
             isAd ? 'ring-2 ring-amber-500/50' : ''
@@ -73,7 +69,6 @@ export default function PlayerBar({
           </div>
         </div>
 
-        {/* CENTER — Controls + Progress */}
         <div className="flex flex-1 flex-col items-center justify-center gap-1.5 px-6">
           <div className="flex items-center gap-4">
             <button
@@ -121,7 +116,6 @@ export default function PlayerBar({
           </div>
         </div>
 
-        {/* RIGHT — Equalizer + Like */}
         <div className="flex w-[120px] min-w-[120px] items-center justify-end gap-3">
           {!isAd && (
             <>
