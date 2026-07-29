@@ -4,6 +4,7 @@ export default function BoomerangVideoBg() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mode, setMode] = useState<'video' | 'canvas'>('video');
+  const [videoFailed, setVideoFailed] = useState(false);
   const framesRef = useRef<ImageData[]>([]);
   const frameIndexRef = useRef(0);
   const directionRef = useRef<1 | -1>(1);
@@ -14,7 +15,7 @@ export default function BoomerangVideoBg() {
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
 
-    const MAX_WIDTH = 640; // reduced for performance
+    const MAX_WIDTH = 640;
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
@@ -56,7 +57,7 @@ export default function BoomerangVideoBg() {
       canvas.width = first.width;
       canvas.height = first.height;
 
-      const FPS = 24; // reduced from 30
+      const FPS = 24;
       const interval = 1000 / FPS;
       let lastTime = performance.now();
 
@@ -87,34 +88,45 @@ export default function BoomerangVideoBg() {
       rafRef.current = requestAnimationFrame(playLoop);
     };
 
+    const handleError = () => {
+      setVideoFailed(true);
+    };
+
     video.addEventListener('ended', handleEnded);
+    video.addEventListener('error', handleError);
     scheduleCapture();
 
     return () => {
       video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('error', handleError);
       cancelAnimationFrame(rafRef.current);
     };
   }, [mode]);
 
   return (
     <div className="absolute inset-0 z-0 scale-[1.08] origin-center overflow-hidden will-change-transform">
+      {/* Fallback background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1920&q=80)',
+          filter: 'brightness(0.4)',
+        }}
+      />
+      
       <video
         ref={videoRef}
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260611_183632_c311af08-e4b7-458f-81e7-79847a49b3d3.mp4"
         muted
         playsInline
-        crossOrigin="anonymous"
         autoPlay
+        preload="auto"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          mode === 'canvas' ? 'opacity-0' : 'opacity-100'
+          mode === 'canvas' || videoFailed ? 'opacity-0' : 'opacity-100'
         }`}
       />
       <canvas
         ref={canvasRef}
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          mode === 'canvas' ? 'opacity-100' : 'opacity-0'
+          mode === 'canvas' && !videoFailed ? 'opacity-100' : 'opacity-0'
         }`}
-      />
-    </div>
-  );
-}
