@@ -105,7 +105,6 @@ export default function BoomerangVideoBg() {
 
   return (
     <div className="absolute inset-0 z-0 scale-[1.08] origin-center overflow-hidden will-change-transform">
-      {/* Fallback background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -113,7 +112,6 @@ export default function BoomerangVideoBg() {
           filter: 'brightness(0.4)',
         }}
       />
-      
       <video
         ref={videoRef}
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260611_183632_c311af08-e4b7-458f-81e7-79847a49b3d3.mp4"
@@ -124,9 +122,13 @@ export default function BoomerangVideoBg() {
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
           mode === 'canvas' || videoFailed ? 'opacity-0' : 'opacity-100'
         }`}
-      />
+      ></video>
       <canvas
         ref={canvasRef}
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
           mode === 'canvas' && !videoFailed ? 'opacity-100' : 'opacity-0'
         }`}
+      ></canvas>
+    </div>
+  );
+}
