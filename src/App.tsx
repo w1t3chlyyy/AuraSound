@@ -177,7 +177,6 @@ export default function App() {
         onPrev={playPrev}
         currentTime={currentTime}
         remainingTime={remainingTime}
-        hasSubscription={hasSubscription}
         onSubscribe={() => setHasSubscription(true)}
       />
     </div>
