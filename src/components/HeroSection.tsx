@@ -39,13 +39,13 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
         <div className="animate-fade-up delay-4 mt-8 flex flex-col sm:flex-row items-center gap-3">
           <button
             onClick={() => onNavigate('search')}
-            className="magnetic-btn rounded-full bg-white px-7 py-2.5 text-sm text-gray-900 transition-all duration-200 hover:scale-150 hover:shadow-lg hover:shadow-white/10 active:scale-95"
+            className="magnetic-btn rounded-full bg-white px-7 py-2.5 text-sm text-gray-900 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-white/10 active:scale-95"
           >
             Искать на полках
           </button>
           <button
             onClick={() => onNavigate('charts')}
-            className="magnetic-btn liquid-glass liquid-glass-shimmer rounded-full px-7 py-2.5 text-sm text-white transition-all duration-200 hover:scale-150 active:scale-95"
+            className="magnetic-btn liquid-glass liquid-glass-shimmer rounded-full px-7 py-2.5 text-sm text-white transition-all duration-200 hover:scale-105 active:scale-95"
           >
             Новые поступления
           </button>
