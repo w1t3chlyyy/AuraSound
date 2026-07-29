@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Helvetica Regular', Helvetica, Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :root {
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@layer components {
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.15) 20%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.15) 80%,
+      rgba(255, 255, 255, 0.45) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+  .delay-5 { animation-delay: 0.75s; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fade-up-scale {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes text-reveal {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes page-exit {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes heart-burst {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes equalizer {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s var(--ease-out-expo) backwards;
+}
+
+.animate-fade-up-scale {
+  animation: fade-up-scale 0.8s var(--ease-out-expo) backwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s var(--ease-spring) backwards;
+}
+
+.animate-text-reveal {
+  animation: text-reveal 0.8s var(--ease-out-expo) backwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.5s var(--ease-out-expo) backwards;
+}
+
+.animate-page-enter {
+  animation: page-enter 0.35s var(--ease-out-expo) both;
+}
+
+.animate-page-exit {
+  animation: page-exit 0.25s ease-in both;
+}
+
+.animate-heart-burst {
+  animation: heart-burst 0.4s var(--ease-spring);
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+.magnetic-btn {
+  transition: transform 0.15s var(--ease-out-expo);
+}
+
+.card-lift {
+  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+}
+
+.img-zoom {
+  transition: transform 0.5s var(--ease-out-expo);
+}
+.img-zoom:hover {
+  transform: scale(1.06);
+}
+
+.eq-bar {
+  transform-origin: bottom;
+  animation: equalizer 0.8s ease-in-out infinite;
+}
+.eq-bar:nth-child(1) { animation-duration: 0.6s; }
+.eq-bar:nth-child(2) { animation-duration: 0.8s; animation-delay: 0.1s; }
+.eq-bar:nth-child(3) { animation-duration: 0.5s; animation-delay: 0.15s; }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
